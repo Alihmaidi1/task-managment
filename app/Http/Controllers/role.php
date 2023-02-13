@@ -115,12 +115,9 @@ class role extends Controller
 
         try{
 
-
             return response()->json(["data"=>$this->role->getAllRole()],200);
 
         }catch(\Exception $ex){
-
-
 
             return response()->json(["message"=>$ex->getMessage()],500);
 
