@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class admin extends Authenticatable
+{
+    use HasFactory,HasUuids,HasApiTokens;
+
+
+    public $fillable=["name","email"];
+    public $hidden=["created_at","updated_at"];
+
+
+
+    public function role(){
+
+
+        return $this->belongsTo(role::class,"role_id");
+    }
+
+
+}
