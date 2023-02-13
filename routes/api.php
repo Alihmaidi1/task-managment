@@ -20,12 +20,21 @@ Route::group(["middleware"=>"api_password"],function(){
 
         Route::post("/logoutadmin",[authentication::class,"logoutadmin"]);
         Route::get("/getalladmin",[admin::class,"getalladmin"]);
+        Route::post("/createadmin",[admin::class,"create"]);
+        Route::post("/updateadmin",[admin::class,"update"]);
+        Route::get("/getmyadmininfo",[admin::class,"getmyadmininfo"]);
+        Route::post("/deleteadmin",[admin::class,"delete"]);
+
+        
+
+
 
 
         Route::post("/createrole",[role::class,"create"]);
         Route::post("/updaterole",[role::class,"update"]);
         Route::get("/getrole",[role::class,"getrole"]);
         Route::post("/deleterole",[role::class,"delete"]);
+        Route::get("/getallrole",[role::class,"getallrole"]);
 
 
     });

@@ -17,4 +17,8 @@ interface roleInterface{
     public function delete($id);
 
 
+
+    public function getAllRole();
+
+
 }

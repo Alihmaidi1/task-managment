@@ -13,7 +13,7 @@ class admin extends Authenticatable
     use HasFactory,HasUuids,HasApiTokens;
 
 
-    public $fillable=["name","email"];
+    public $fillable=["name","email","role_id","password"];
     public $hidden=["created_at","updated_at","role_id","password"];
 
 

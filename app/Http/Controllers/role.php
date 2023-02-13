@@ -109,4 +109,23 @@ class role extends Controller
 
     }
 
+
+
+    public function getallrole(Request $request){
+
+        try{
+
+
+            return response()->json(["data"=>$this->role->getAllRole()],200);
+
+        }catch(\Exception $ex){
+
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
+
+    }
 }

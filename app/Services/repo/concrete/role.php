@@ -48,5 +48,10 @@ class role implements roleInterface{
         
     }
 
+    public function getAllRole(){
+
+        return ModelsRole::all();
+    }
+
 
 }
