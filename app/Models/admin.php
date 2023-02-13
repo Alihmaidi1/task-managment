@@ -14,7 +14,7 @@ class admin extends Authenticatable
 
 
     public $fillable=["name","email"];
-    public $hidden=["created_at","updated_at"];
+    public $hidden=["created_at","updated_at","role_id","password"];
 
 
 
@@ -24,5 +24,12 @@ class admin extends Authenticatable
         return $this->belongsTo(role::class,"role_id");
     }
 
+    public $appends=["role"];
+
+
+    public function getRoleAttribute(){
+
+        return $this->role()->get();
+    }
 
 }
