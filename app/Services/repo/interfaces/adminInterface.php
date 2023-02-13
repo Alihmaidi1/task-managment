@@ -9,5 +9,5 @@ interface adminInterface{
 
 
     public function getUserByEmail($email);
-    
+    public function getAllAdmin();
 }

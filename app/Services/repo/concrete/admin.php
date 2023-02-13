@@ -14,5 +14,11 @@ class admin implements adminInterface{
         return ModelsAdmin::where("email",$email)->firstOrFail();
     }
 
+    public function getAllAdmin(){
+
+
+        return ModelsAdmin::where("id","!=",auth()->user()->id)->get();
+    }
+
 
 }
