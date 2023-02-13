@@ -9,4 +9,8 @@ interface  authenticationInterface{
 
     public function login($email,$password);
 
+
+    public function getToken($refreshToken);
+
+
 }

@@ -29,7 +29,22 @@ class admin implements authenticationInterface{
             }
             
         return $token->json();
-            
+        
+
+    }
+
+
+    public function getToken($refreshToken){
+
+        $client=DB::table('oauth_clients')->where("provider","admins")->first();
+        return  Http::asForm()->post(request()->root()."/oauth/token",[
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'client_id' => $client->id,
+            'client_secret' => $client->secret,
+        ])->json();
+
+
 
 
     }
