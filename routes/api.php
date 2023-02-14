@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
 use App\Http\Controllers\image;
+use App\Http\Controllers\member;
 use App\Http\Controllers\role;
 use App\Http\Controllers\technical;
 use Illuminate\Http\Request;
@@ -48,6 +49,12 @@ Route::group(["middleware"=>"api_password"],function(){
 
 
         Route::post("/uploadimages",[image::class,"upload"]);
+        Route::post("/uploadimage",[image::class,"uploadone"])->middleware("checkAllToken");
+
+
+
+        Route::post("/createmember",[member::class,"store"]);
+
 
 
 
