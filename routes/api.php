@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
+use App\Http\Controllers\image;
 use App\Http\Controllers\role;
 use App\Http\Controllers\technical;
 use Illuminate\Http\Request;
@@ -44,6 +45,9 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::get("/gettechnical",[technical::class,"gettechnical"]);
         Route::post("/deletetechnical",[technical::class,"delete"]);
         Route::get("/getalltechnical",[technical::class,"getalltechnical"]);
+
+
+        Route::post("/uploadimages",[image::class,"upload"]);
 
 
 

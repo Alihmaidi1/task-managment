@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Services\authentication\concrete\factoryAuthentication;
 use App\Services\authentication\interfacces\factoryAuthenticationInterface;
 use App\Services\repo\concrete\admin;
+use App\Services\repo\concrete\image1;
 use App\Services\repo\concrete\role;
 use App\Services\repo\concrete\technical;
 use App\Services\repo\concrete\user;
 use App\Services\repo\interfaces\adminInterface;
+use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\roleInterface;
 use App\Services\repo\interfaces\technicalInterface;
 use App\Services\repo\interfaces\userInterface;
@@ -27,6 +29,7 @@ class repo extends ServiceProvider
         $this->app->bind(userInterface::class,user::class);
         $this->app->bind(roleInterface::class,role::class);
         $this->app->bind(technicalInterface::class,technical::class);
+        $this->app->bind(imageInterface::class,image1::class);
 
     }
 
