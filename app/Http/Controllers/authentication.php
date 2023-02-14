@@ -90,7 +90,25 @@ class authentication extends Controller
     }
 
 
+    public function logout(Request $request){
 
+        try{
+
+            auth("user")->user()->token()->revoke();
+            return response()->json([],200);
+
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
+
+
+    }
 
 
 

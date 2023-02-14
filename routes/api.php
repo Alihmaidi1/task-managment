@@ -64,7 +64,7 @@ Route::group(["middleware"=>"api_password"],function(){
 
     Route::group(["middleware"=>"auth:user"],function(){
 
-        // Route::post("/logout",[authentication::class,"logout"]);
+        Route::post("/logout",[authentication::class,"logout"]);
 
     });
 
