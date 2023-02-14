@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
+use App\Http\Controllers\baseFeature;
 use App\Http\Controllers\image;
 use App\Http\Controllers\member;
 use App\Http\Controllers\role;
@@ -67,6 +68,19 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::get("/getallteam",[team::class,"getallteam"]);
         Route::get("/getteam",[team::class,"getteam"]);
         Route::post("/deleteteam",[team::class,"delete"]);
+
+
+
+        Route::post("/createbasefeature",[baseFeature::class,"store"]);
+        Route::post("/updatebasefeature",[baseFeature::class,"update"]);
+        Route::get("/getallbasefeature",[baseFeature::class,"getall"]);
+        Route::get("/getbasefeature",[baseFeature::class,"getOne"]);
+        Route::post("/deletebasefeature",[baseFeature::class,"delete"]);
+
+        
+        
+
+
 
 
     });
