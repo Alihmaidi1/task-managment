@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = ['name','email','password',"gender","url","date_of_birth"];
 
-    protected $hidden = ['password',"created_at","updated_at"];
+    protected $hidden = ['password',"created_at","updated_at","pivot"];
 
 
     public function getGenderAttribute($value){
@@ -42,6 +42,13 @@ class User extends Authenticatable
         return $arr;
 
 
+    }
+
+
+    public function teams(){
+
+
+        return $this->belongsToMany(team::class,team_member::class,"member_id","team_id");
     }
 
 

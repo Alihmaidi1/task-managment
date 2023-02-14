@@ -5,6 +5,7 @@ use App\Http\Controllers\authentication;
 use App\Http\Controllers\image;
 use App\Http\Controllers\member;
 use App\Http\Controllers\role;
+use App\Http\Controllers\team;
 use App\Http\Controllers\technical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,15 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::get("/getuser",[member::class,"getuser"]);
         Route::get("getalluser",[member::class,"getalluser"]);
         Route::post("/deleteuser",[member::class,"delete"]);
+
+
+
+        Route::post("/createteam",[team::class,"store"]);
+        Route::post("/updateteam",[team::class,"update"]);
+        Route::get("/getallteam",[team::class,"getallteam"]);
+        Route::get("/getteam",[team::class,"getteam"]);
+        Route::post("/deleteteam",[team::class,"delete"]);
+
 
     });
 
