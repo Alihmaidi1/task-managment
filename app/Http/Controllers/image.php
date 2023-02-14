@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\images\upload;
 use App\Http\Requests\images\uploadone;
+use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,11 @@ class image extends Controller
 
 
     public $image;
-    public function __construct(imageInterface $image){
+    public $temp;
+    public function __construct(imageInterface $temp){
 
-        $this->image=$image;
+        $this->temp=$temp;
+        $this->image=new intervenationImage($temp);
 
     }
 

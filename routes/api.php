@@ -54,9 +54,10 @@ Route::group(["middleware"=>"api_password"],function(){
 
 
         Route::post("/createmember",[member::class,"store"]);
-
-
-
+        Route::post("/updatemember",[member::class,"update"]);
+        Route::get("/getuser",[member::class,"getuser"]);
+        Route::get("getalluser",[member::class,"getalluser"]);
+        Route::post("/deleteuser",[member::class,"delete"]);
 
     });
 
