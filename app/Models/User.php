@@ -52,5 +52,9 @@ class User extends Authenticatable
     }
 
 
+    public function features(){
+
+        return $this->belongsToMany(feature::class,feature_member::class,"member_id","feature_id");
+    }
 
 }

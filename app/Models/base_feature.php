@@ -12,4 +12,10 @@ class base_feature extends Model
 
     public $fillable=["name"];
     public $hidden=["created_at","updated_at"];
+
+    public function features(){
+
+
+        return $this->hasMany(feature::class,"base_feature_id");
+    }
 }

@@ -31,5 +31,11 @@ class team extends Model
     }
 
 
+    public function tasks(){
+
+
+        return $this->hasMany(task::class,"task_id");
+    }
+
 
 }
