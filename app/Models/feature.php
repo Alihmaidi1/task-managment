@@ -16,6 +16,19 @@ class feature extends Model
     public $hidden=["created_at","updated_at","task_id","base_feature_id"];
 
 
+    public function images(){
+
+        return $this->morphMany(image::class,"imageable");
+    }
+
+
+    public function technicals(){
+
+
+        return $this->morphMany(technical_feature_task::class,"technicalable");
+
+
+    }
     public function base_feature(){
 
         return $this->belongsTo(base_feature::class,"base_feature_id");

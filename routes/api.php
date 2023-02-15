@@ -6,6 +6,7 @@ use App\Http\Controllers\baseFeature;
 use App\Http\Controllers\image;
 use App\Http\Controllers\member;
 use App\Http\Controllers\role;
+use App\Http\Controllers\task;
 use App\Http\Controllers\team;
 use App\Http\Controllers\technical;
 use Illuminate\Http\Request;
@@ -78,6 +79,8 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("/deletebasefeature",[baseFeature::class,"delete"]);
 
         
+        Route::post("/createtask",[task::class,"store"]);
+
         
 
 

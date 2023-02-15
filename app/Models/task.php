@@ -14,6 +14,23 @@ class task extends Model
 
     public $hidden=["created_at","updated_at","team_id"];
 
+    public function images(){
+
+
+        return $this->morphMany(image::class,"imageable");
+
+
+    }
+
+    public function technicals(){
+
+
+        return $this->morphMany(technical_feature_task::class,"technicalable");
+
+
+    }
+
+
     public function features(){
 
 
