@@ -6,7 +6,6 @@ use App\Http\Requests\task\delete;
 use App\Http\Requests\task\store;
 use App\Http\Requests\task\update;
 use App\Http\Requests\task\updateteam;
-use App\Models\feature_member;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
@@ -40,10 +39,11 @@ class task extends Controller
             $description=$request->description;
             $technicals=$request->technicals;
             $images=$request->images;
-            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,"web");
-            $this->task->storeTechnical($technicals,$task->id);
+            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,"web");            
+            $task->technicals()->sync($technicals);
             $this->temp->saveImages($images,"task",$task->id);
             $task->technicals;
+            $task->team;
             return response()->json(["data"=>$task],200);
 
 
@@ -74,8 +74,9 @@ class task extends Controller
             $this->temp->deleteImage($deleted_image,"task");
             $task=$this->task->update($id,$name,$status,$critial,$deadline,$description);
             $this->temp->saveImages($images,"task",$id);  
-            $this->task->updateTechnical($technicals,$task->id);
+            $task->technicals()->sync($technicals);           
             $task->technicals;
+            $task->team;           
             return response()->json(["data"=>$task],200);
 
 
@@ -100,15 +101,12 @@ class task extends Controller
             if($task->team_id==$team_id){
                 return response()->json(["data"=>$task],200);
             }
-            
-            foreach($task->members as $member){
-
-
-                feature_member::findOrFail($member->id)->delete();
-            }
+            $task->members()->delete();
             $task->team_id=$team_id;
             $task->save();
-
+            $task->technicals;
+            $task->team;           
+       
             return response()->json(["data"=>$task]);
             
 
@@ -153,12 +151,13 @@ class task extends Controller
 
             $task=$this->task->getTask($request->id);
             $features=$task->features;
-            foreach($features as $feature){
+            // foreach($features as $feature){
 
-                $feature->technicals()->delete();
+            //     $feature->technicals()->delete();
+                
 
 
-            }
+            // }
 
         }catch(\Exception $ex){
 

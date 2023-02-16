@@ -11,9 +11,7 @@ interface taskInterface{
     public function update($id,$name,$status,$critial,$deadline,$description);
 
 
-    public function storeTechnical($technicals,$id);
-    public function updateTechnical($technicals,$id);
-
+ 
     public function getTask($id);
 
 

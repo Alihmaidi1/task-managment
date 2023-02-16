@@ -25,7 +25,7 @@ class feature extends Model
     public function technicals(){
 
 
-        return $this->morphMany(technical_feature_task::class,"technicalable");
+        return $this->morphToMany(technical::class,"technicalable");
 
 
     }

@@ -48,27 +48,7 @@ class task implements taskInterface{
 
 
     }
-    public function storeTechnical($technicals,$id){
 
-
-
-        foreach($technicals as $technical){
-
-            $this->technicalTaskFeature->store($technical,$id,"App\\Models\\task");
-
-        }
-        
-
-    }
-
-    public function updateTechnical($technicals,$id){
-
-        technical_feature_task::where("technicalable_id",$id)->where("technicalable_type","App\\Models\\task")->delete();
-        $this->storeTechnical($technicals,$id);
-
-
-
-    }
 
     public function getTask($id){
 
@@ -78,7 +58,7 @@ class task implements taskInterface{
     public function getAllTask(){
 
 
-        return ModelsTask::all();
+        return ModelsTask::with(["technicals","team","features"])->get();
     }
 
     

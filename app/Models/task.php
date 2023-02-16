@@ -12,9 +12,9 @@ class task extends Model
 
     public $fillable=["name","status","critial","process","deadline","description","from","team_id"];
 
-    public $hidden=["created_at","updated_at","team_id"];
+    public $hidden=["pivot","created_at","updated_at","team_id"];
 
-    public $appends=["images","team"];
+    public $appends=["images"];
 
     public function getImagesAttribute(){
 
@@ -33,8 +33,7 @@ class task extends Model
 
     public function technicals(){
 
-
-        return $this->morphMany(technical_feature_task::class,"technicalable");
+        return $this->morphToMany(technical::class,"technicalable");
 
     }
 
@@ -98,10 +97,4 @@ class task extends Model
 
     }
 
-    public function getTeamAttribute(){
-
-        return $this->team()->get();
-
-
-    }
 }

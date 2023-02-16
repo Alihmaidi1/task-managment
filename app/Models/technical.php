@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class technical extends Model
 {
@@ -12,21 +13,21 @@ class technical extends Model
 
     public $fillable=["name"];
 
-    public $hidden=["created_at","updated_at"];
+    public $hidden=["pivot","created_at","updated_at"];
 
-    public $appends=["tasks"];
 
-    public function technicalFeaturesTasks(){
+    public function tasks(){
 
-        return $this->hasMany(technical_feature_task::class,"technical_id");
-
+        return $this->morphedByMany(task::class,"technicalable");
     }
 
 
-    public function getTasksAttribute(){
 
+    public function features(){
 
-        
-        
+        return $this->morphedByMany(feature::class,"technicalable");
     }
+    
+    
+
 }

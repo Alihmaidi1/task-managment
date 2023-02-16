@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('technical_feature_tasks', function (Blueprint $table) {
-            $table->uuid("id");
-            $table->primary("id");
+        Schema::create('technicalables', function (Blueprint $table) {
+            $table->id();
             $table->uuid("technicalable_id");
             $table->string("technicalable_type");
             $table->uuid("technical_id");
