@@ -59,5 +59,17 @@ class intervenationImage implements imageInterface{
     }
 
 
+    public function MoveFiles($imageUrl,$from,$to,$id){
+
+        
+        File::makeDirectory(public_path($to."/v1/".$id,0777));
+        File::makeDirectory(public_path($to."/v2/".$id,0777));
+        File::makeDirectory(public_path($to."/v3/".$id,0777));
+        File::move(public_path($from."/v1/".$imageUrl), public_path($to."/v1/".$id."/".$imageUrl));
+        File::move(public_path($from."/v2/".$imageUrl), public_path($to."/v2/".$id."/".$imageUrl));
+        File::move(public_path($from."/v3/".$imageUrl), public_path($to."/v3/".$id."/".$imageUrl));
+
+    }
+
 
 }

@@ -82,9 +82,10 @@ class image1 implements imageInterface{
         foreach($images as $image){
 
             $url=$this->getTempFile($image)->getRawOriginal("url");
-            $this->image->MoveFile($url,"temp",$type);
+            $this->image->MoveFiles($url,"temp",$type,$id);
+
             $this->deleteTempFile($image);
-            $this->saveInImage($url,$type,$id);
+            $this->saveInImage($id."/".$url,$type,$id);
 
         }
 

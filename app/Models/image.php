@@ -25,9 +25,9 @@ class image extends Model
 
         $arr=[];
         $type=($this->imageable_type=="App\\Models\\task")?"task":"feature";
-        $arr["200*300"]=public_path($type."/".$value);
-        $arr["500*700"]=public_path($type."/".$value);
-        $arr["1000*1200"]=public_path($type."/".$value);
+        $arr["200*300"]=public_path($type."/v1/".$value);
+        $arr["500*700"]=public_path($type."/v2/".$value);
+        $arr["1000*1200"]=public_path($type."/v3/".$value);
         return $arr;
 
     }

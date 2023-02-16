@@ -10,6 +10,7 @@ use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
 use Illuminate\Http\Request;
+use File;
 
 class task extends Controller
 {
@@ -151,13 +152,20 @@ class task extends Controller
 
             $task=$this->task->getTask($request->id);
             $features=$task->features;
-            // foreach($features as $feature){
+            foreach($features as $feature){
 
-            //     $feature->technicals()->delete();
+                File::deleteDirectory(public_path("feature/v1/".$feature->id));
+                File::deleteDirectory(public_path("feature/v2/".$feature->id));
+                File::deleteDirectory(public_path("feature/v3/".$feature->id));
+                $feature->technicals()->delete();
+                $feature->images()->delete();
                 
-
-
-            // }
+            }
+            File::deleteDirectory(public_path("task/v1/".$task->id));
+            File::deleteDirectory(public_path("task/v2/".$task->id));
+            File::deleteDirectory(public_path("task/v3/".$task->id));
+            $task->delete();
+            return response()->json([],200);
 
         }catch(\Exception $ex){
 
