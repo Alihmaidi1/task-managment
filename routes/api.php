@@ -80,7 +80,10 @@ Route::group(["middleware"=>"api_password"],function(){
 
         
         Route::post("/createtask",[task::class,"store"]);
-
+        Route::post("/updatetask",[task::class,"update"]);
+        Route::post("task/updateteam",[task::class,"updateteam"]);
+        Route::post("getalltask",[task::class,"getalltask"]);
+        Route::post("deletetask",[task::class,"delete"]);
         
 
 

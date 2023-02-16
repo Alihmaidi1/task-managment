@@ -11,5 +11,8 @@ interface imageInterface{
 
     public function MoveFile($imageUrl,$from,$to);
 
+    
+
+
 
 }

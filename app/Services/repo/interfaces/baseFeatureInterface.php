@@ -16,4 +16,7 @@ interface baseFeatureInterface{
 
 
     public function delete($id);
+
+    
+
 }

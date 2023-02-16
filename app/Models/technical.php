@@ -13,4 +13,20 @@ class technical extends Model
     public $fillable=["name"];
 
     public $hidden=["created_at","updated_at"];
+
+    public $appends=["tasks"];
+
+    public function technicalFeaturesTasks(){
+
+        return $this->hasMany(technical_feature_task::class,"technical_id");
+
+    }
+
+
+    public function getTasksAttribute(){
+
+
+        
+        
+    }
 }

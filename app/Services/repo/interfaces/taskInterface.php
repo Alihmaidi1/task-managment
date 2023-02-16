@@ -7,6 +7,15 @@ interface taskInterface{
 
 
 
+    public function store($name,$status,$critial,$deadline,$team_id,$description,$from);
+    public function update($id,$name,$status,$critial,$deadline,$description);
 
-    
+
+    public function storeTechnical($technicals,$id);
+    public function updateTechnical($technicals,$id);
+
+    public function getTask($id);
+
+
+    public function getAllTask();
 }

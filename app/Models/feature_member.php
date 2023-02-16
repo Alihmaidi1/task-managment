@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class feature_member extends Model
 {
     use HasFactory;
+
+    public $fillable=[""];
 }

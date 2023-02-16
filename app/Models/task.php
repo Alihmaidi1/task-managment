@@ -14,6 +14,15 @@ class task extends Model
 
     public $hidden=["created_at","updated_at","team_id"];
 
+    public $appends=["images","team"];
+
+    public function getImagesAttribute(){
+
+
+        return $this->images()->get();
+
+
+    }
     public function images(){
 
 
@@ -27,7 +36,12 @@ class task extends Model
 
         return $this->morphMany(technical_feature_task::class,"technicalable");
 
+    }
 
+
+    public function members(){
+
+        return $this->hasManyThrough(feature_member::class,feature::class,"task_id","feature_id");
     }
 
 
@@ -80,6 +94,13 @@ class task extends Model
     public function team(){
 
         return $this->belongsTo(team::class,"team_id");
+
+
+    }
+
+    public function getTeamAttribute(){
+
+        return $this->team()->get();
 
 
     }

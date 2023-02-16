@@ -15,6 +15,8 @@ class intervenationImage implements imageInterface{
         $this->image=$image;
     }
 
+
+    
     public function resize($images){
 
         $arr=[];
@@ -41,7 +43,7 @@ class intervenationImage implements imageInterface{
         $image->resize(1000,1200)->save(public_path("temp/v3/".$name),90);
         $temp=$this->image->store($name);
 
-        return $temp->id;
+        return $temp;
 
     }
 

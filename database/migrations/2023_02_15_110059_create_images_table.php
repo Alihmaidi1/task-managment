@@ -18,6 +18,7 @@ return new class extends Migration
             $table->primary("id");
             $table->uuid("imageable_id");
             $table->string("imageable_type");
+            $table->string("url");
             $table->timestamps();
         });
     }

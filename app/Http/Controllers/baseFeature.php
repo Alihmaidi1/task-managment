@@ -108,7 +108,7 @@ class baseFeature extends Controller
             $feature=$this->baseFeature->getOne($id);
             $this->baseFeature->delete($id);
             return response()->json(["data"=>$feature],200);            
-
+            
         }catch(\Exception $ex){
 
 
