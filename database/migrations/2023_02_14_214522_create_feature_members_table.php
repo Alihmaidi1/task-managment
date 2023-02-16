@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('feature_members', function (Blueprint $table) {
-            $table->uuid("id");
-            $table->primary("id");
+            $table->id();
             $table->uuid("member_id");
             $table->foreign("member_id")->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");
             $table->uuid("feature_id");

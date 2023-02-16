@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
 use App\Http\Controllers\baseFeature;
+use App\Http\Controllers\feature;
 use App\Http\Controllers\image;
 use App\Http\Controllers\member;
 use App\Http\Controllers\role;
@@ -85,6 +86,12 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("getalltask",[task::class,"getalltask"]);
         Route::post("deletetask",[task::class,"delete"]);
         
+
+
+        Route::post("/addfeaturetotask",[feature::class,"store"]);
+        Route::post("/updatefeaturetask",[feature::class,"update"]);
+        Route::post("/deletefeaturetask",[feature::class,"delete"]);
+
 
 
 

@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\authentication\concrete\factoryAuthentication;
-use App\Services\authentication\interfacces\factoryAuthenticationInterface;
 use App\Services\repo\concrete\admin;
 use App\Services\repo\concrete\baseFeature;
+use App\Services\repo\concrete\feature;
 use App\Services\repo\concrete\image1;
-use App\Services\repo\concrete\member;
 use App\Services\repo\concrete\role;
 use App\Services\repo\concrete\task;
 use App\Services\repo\concrete\team;
@@ -16,6 +14,7 @@ use App\Services\repo\concrete\technicalTaskFeature;
 use App\Services\repo\concrete\user;
 use App\Services\repo\interfaces\adminInterface;
 use App\Services\repo\interfaces\baseFeatureInterface;
+use App\Services\repo\interfaces\featureInterface;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\memberInterface;
 use App\Services\repo\interfaces\roleInterface;
@@ -44,6 +43,7 @@ class repo extends ServiceProvider
         $this->app->bind(baseFeatureInterface::class,baseFeature::class);
         $this->app->bind(taskInterface::class,task::class);
         $this->app->bind(technicalTaskFeatureInterface::class,technicalTaskFeature::class);
+        $this->app->bind(featureInterface::class,feature::class);
 
 
 

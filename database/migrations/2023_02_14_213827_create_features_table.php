@@ -18,7 +18,9 @@ return new class extends Migration
             $table->primary("id");
             $table->enum("status",[0,1]);
             $table->enum("critial",[0,1,2,3,4]);
-            $table->integer("process");          
+            $table->integer("process")->default(0);     
+            $table->date("deadline");
+            $table->text("description");     
             $table->boolean("from");
             $table->uuid("task_id");
             $table->foreign("task_id")->references("id")->on("tasks")->onDelete("cascade")->onUpdate("cascade");

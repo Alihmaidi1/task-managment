@@ -40,7 +40,7 @@ class task extends Controller
             $description=$request->description;
             $technicals=$request->technicals;
             $images=$request->images;
-            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,"web");            
+            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,0);            
             $task->technicals()->sync($technicals);
             $this->temp->saveImages($images,"task",$task->id);
             $task->technicals;

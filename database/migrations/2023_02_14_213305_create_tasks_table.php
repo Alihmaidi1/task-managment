@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer("process")->default(0);
             $table->date("deadline");
             $table->text("description");
-            $table->string("from");
+            $table->boolean("from");
             $table->uuid("team_id");
             $table->foreign("team_id")->references("id")->on("teams")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
