@@ -48,7 +48,7 @@ class team implements teamInterface{
     public function getAllTeam(){
 
 
-        return ModelsTeam::all();
+        return ModelsTeam::with(["tasks"])->get();
 
 
     }
@@ -56,7 +56,7 @@ class team implements teamInterface{
     public function getTeam($id){
 
 
-        return ModelsTeam::findOrFail($id);
+        return ModelsTeam::with(["tasks"])->where("id",$id)->firstOrFail();
     }
 
 

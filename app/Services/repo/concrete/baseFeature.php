@@ -32,12 +32,12 @@ class baseFeature implements baseFeatureInterface{
     public function getAll(){
 
 
-        return base_feature::all();
+        return base_feature::with(["tasks"])->get();
     }
 
     public function getOne($id){
 
-        return base_feature::findOrFail($id);
+        return base_feature::with(["tasks"])->where("id",$id)->firstOrFail();
     }
 
     public function delete($id){

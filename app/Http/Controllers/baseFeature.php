@@ -50,7 +50,7 @@ class baseFeature extends Controller
             $id=$request->id;
             $name=$request->name;
             $feature=$this->baseFeature->update($id,$name);
-
+            $feature->tasks;
             return response()->json(["data"=>$feature],200);
 
 

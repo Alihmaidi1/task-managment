@@ -35,13 +35,13 @@ class technical implements technicalInterface{
     public function getTechnical($id){
 
 
-        return ModelsTechnical::findOrFail($id);
+        return ModelsTechnical::with(["tasks","features"])->where("id",$id)->firstOrFail();
     }
 
     public function getAllTechnical(){
 
 
-        return ModelsTechnical::all();
+        return ModelsTechnical::with(["tasks","features"])->get();
     }
 
 

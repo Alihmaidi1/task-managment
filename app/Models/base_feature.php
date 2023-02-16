@@ -18,4 +18,9 @@ class base_feature extends Model
 
         return $this->hasMany(feature::class,"base_feature_id");
     }
+
+    public function tasks(){
+
+        return $this->belongsToMany(task::class,feature::class,"base_feature_id","task_id");
+    }
 }
