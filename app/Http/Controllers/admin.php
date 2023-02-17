@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\admin\create;
 use App\Http\Requests\admin\getadmin;
+use App\Http\Requests\admin\sendmail;
 use App\Http\Requests\admin\update;
+use App\Jobs\SendMails;
 use App\Services\repo\interfaces\adminInterface;
 use Illuminate\Http\Request;
 
@@ -134,5 +136,31 @@ class admin extends Controller
 
 
     }
+
+
+    public function sendmail(sendmail $request){
+
+        try{
+
+            $members=$request->members;
+            $title=$request->title;
+            $content=$request->content;
+            $job=new SendMails($members,$title,$content);
+            dispatch($job);
+            return response()->json(["message"=>"the mail in Sending..."],200);
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
+
+
+    }
+
+
 
 }

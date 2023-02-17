@@ -10,7 +10,9 @@ use App\Http\Controllers\role;
 use App\Http\Controllers\task;
 use App\Http\Controllers\team;
 use App\Http\Controllers\technical;
+use App\Mail\sendToUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -93,6 +95,7 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("/deletefeaturetask",[feature::class,"delete"]);
 
 
+        Route::post("/sendemail",[admin::class,"sendmail"]);
 
 
 
