@@ -9,6 +9,7 @@ use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use Image;
 use File;
+use Illuminate\Support\Facades\Cache;
 
 class image1 implements imageInterface{
 
@@ -24,7 +25,7 @@ class image1 implements imageInterface{
   
     public function saveInImage($url,$type,$image_id){
 
-        return ModelsImage::create([
+        $image=ModelsImage::create([
 
             "url"=>$url,
             "imageable_id"=>$image_id,

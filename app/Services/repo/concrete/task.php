@@ -6,20 +6,15 @@ use App\Models\task as ModelsTask;
 use App\Models\technical_feature_task;
 use App\Services\repo\interfaces\taskInterface;
 use App\Services\repo\interfaces\technicalTaskFeatureInterface;
+use Illuminate\Support\Facades\Cache;
 
 class task implements taskInterface{
 
-    public $technicalTaskFeature;
 
-    public function __construct(technicalTaskFeatureInterface $technicalTaskFeature){
-
-        $this->technicalTaskFeature=$technicalTaskFeature;
-
-    }
     public function store($name,$status,$critial,$deadline,$team_id,$description,$from){
 
 
-        return ModelsTask::create([
+        $task=ModelsTask::create([
 
             "name"=>$name,
             "status"=>$status,
@@ -31,6 +26,8 @@ class task implements taskInterface{
 
         ]);
 
+        Cache::pull("tasks");
+        return $task;
 
     }
 
@@ -43,7 +40,8 @@ class task implements taskInterface{
         $task->deadline=$deadline;
         $task->description=$description;
         $task->save();
-
+        Cache::pull("tasks");
+        Cache::pull("task:".$task->id);
         return $task;
 
 
@@ -52,13 +50,19 @@ class task implements taskInterface{
 
     public function getTask($id){
 
-        return ModelsTask::findOrFail($id);
+        return Cache::rememberForever("task:".$id,function()use($id){
+
+            return ModelsTask::findOrFail($id);
+        });
     }
 
     public function getAllTask(){
 
 
-        return ModelsTask::with(["technicals","team","features"])->get();
+        return Cache::rememberForever("tasks",function(){
+
+            return ModelsTask::with(["technicals","team","features"])->get();
+        });
     }
 
     

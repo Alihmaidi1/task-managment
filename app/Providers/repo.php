@@ -42,7 +42,6 @@ class repo extends ServiceProvider
         $this->app->bind(teamInterface::class,team::class);
         $this->app->bind(baseFeatureInterface::class,baseFeature::class);
         $this->app->bind(taskInterface::class,task::class);
-        $this->app->bind(technicalTaskFeatureInterface::class,technicalTaskFeature::class);
         $this->app->bind(featureInterface::class,feature::class);
 
 

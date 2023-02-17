@@ -4,6 +4,7 @@ namespace App\Services\repo\concrete;
 
 use App\Models\feature as ModelsFeature;
 use App\Services\repo\interfaces\featureInterface;
+use Illuminate\Support\Facades\Cache;
 
 class feature implements featureInterface{
 
@@ -11,7 +12,7 @@ class feature implements featureInterface{
     public function store($status,$critial,$from,$task_id,$base_feature_id,$description,$deadline){
 
 
-        return ModelsFeature::create([
+        $feature=ModelsFeature::create([
 
             "status"=>$status,
             "critial"=>$critial,
@@ -22,8 +23,8 @@ class feature implements featureInterface{
             "from"=>$from
 
         ]);
-
-
+        Cache::pull("features");
+        return $feature;
     }
 
 
@@ -37,7 +38,8 @@ class feature implements featureInterface{
         $feature->description=$description;
         $feature->deadline=$deadline;
         $feature->save();
-
+        Cache::pull("features");
+        Cache::pull("feature:".$id);
         return $feature;
 
 
@@ -46,7 +48,10 @@ class feature implements featureInterface{
 
     public function getFeature($id){
 
-        return ModelsFeature::findOrFail($id);
+        return Cache::rememberForever("feature:".$id,function()use($id){
+
+            return ModelsFeature::findOrFail($id);
+        });
     }
 
 }

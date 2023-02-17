@@ -5,7 +5,7 @@ namespace App\Services\repo\concrete;
 
 use App\Models\technical as ModelsTechnical;
 use App\Services\repo\interfaces\technicalInterface;
-
+use Illuminate\Support\Facades\Cache;
 
 class technical implements technicalInterface{
 
@@ -14,12 +14,15 @@ class technical implements technicalInterface{
 
 
 
-        return ModelsTechnical::create([
+        $technical=ModelsTechnical::create([
 
 
             "name"=>$name
 
         ]);
+        Cache::pull("technicals");
+
+        
     }
 
 
@@ -29,19 +32,28 @@ class technical implements technicalInterface{
         $technical=ModelsTechnical::findOrFail($id);
         $technical->name=$name;
         $technical->save();
+        Cache::pull("technicals");
+        Cache::pull("technical:".$id);
         return $technical;
         
     }
     public function getTechnical($id){
 
 
-        return ModelsTechnical::with(["tasks","features"])->where("id",$id)->firstOrFail();
+        return Cache::rememberForever("technical:".$id,function()use($id){
+
+            return ModelsTechnical::with(["tasks","features"])->where("id",$id)->firstOrFail();
+
+        });
     }
 
     public function getAllTechnical(){
 
 
-        return ModelsTechnical::with(["tasks","features"])->get();
+        return Cache::rememberForever("technicals",function(){
+
+            return ModelsTechnical::with(["tasks","features"])->get();
+        });
     }
 
 

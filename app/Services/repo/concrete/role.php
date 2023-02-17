@@ -4,19 +4,21 @@ namespace App\Services\repo\concrete;
 
 use App\Models\role as ModelsRole;
 use App\Services\repo\interfaces\roleInterface;
-
+use Illuminate\Support\Facades\Cache;
 
 class role implements roleInterface{
 
     public function store($name,$permissions){
 
 
-        return ModelsRole::create([
+        $role=ModelsRole::create([
 
             "name"=>$name,
             "permissions"=>json_encode($permissions)
 
         ]);
+        Cache::pull("roles");
+        return $role;
     }
 
 
@@ -27,6 +29,8 @@ class role implements roleInterface{
         $role->name=$name;
         $role->permissions=json_encode($permissions);
         $role->save();
+        Cache::pull("roles");
+        Cache::pull("role:".$id);
         return $role;
         
     }
@@ -35,7 +39,10 @@ class role implements roleInterface{
     public function getRole($id){
 
 
-        return ModelsRole::findOrFail($id);
+        return Cache::rememberForever("role:".$id,function()use($id){
+
+            return ModelsRole::findOrFail($id);
+        });
     }
 
     public function delete($id){
@@ -43,14 +50,19 @@ class role implements roleInterface{
         $role=ModelsRole::findOrFail($id);
         $role1=$role;
         $role->delete();
-        return $role1;
+        Cache::pull("roles");
+        Cache::pull("role:".$id);
 
+        return $role1;
         
     }
 
     public function getAllRole(){
 
-        return ModelsRole::all();
+        return Cache::rememberForever("roles",function(){
+
+            return ModelsRole::all();
+        });
     }
 
 
