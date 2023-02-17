@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\concrete;
 
@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class admin implements adminInterface{
+
 
 
     public function getUserByEmail($email){
@@ -33,7 +34,7 @@ class admin implements adminInterface{
             "email"=>$email,
             "password"=>Hash::make($password),
             "role_id"=>$role_id
-            
+
         ]);
 
 
@@ -57,7 +58,7 @@ class admin implements adminInterface{
 
 
         return $admin;
-        
+
 
     }
 

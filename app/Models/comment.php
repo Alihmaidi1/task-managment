@@ -12,7 +12,7 @@ class comment extends Model
     public $fillable=["content","forable_id","forable_type","fromable_id","fromable_type"];
 
 
-    public $hiiden=["created_at","updated_at"];
+    public $hiiden=["updated_at","forable_id","forable_type","fromable_id","fromable_type"];
 
 
     public function forable()

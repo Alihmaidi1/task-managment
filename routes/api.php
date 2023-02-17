@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
 use App\Http\Controllers\baseFeature;
+// use App\Http\Controllers\comment;
 use App\Http\Controllers\feature;
 use App\Http\Controllers\image;
 use App\Http\Controllers\member;
@@ -10,9 +11,6 @@ use App\Http\Controllers\role;
 use App\Http\Controllers\task;
 use App\Http\Controllers\team;
 use App\Http\Controllers\technical;
-use App\Mail\sendToUser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,35 +21,34 @@ Route::group(["middleware"=>"api_password"],function(){
 
     Route::post("/login",[authentication::class,"login"]);
     Route::post("refreshtoken",[authentication::class,"refreshtoken"]);
-
     Route::group(["middleware"=>"auth:api"],function(){
 
 
         Route::post("/logoutadmin",[authentication::class,"logoutadmin"]);
-        Route::get("/getalladmin",[admin::class,"getalladmin"]);
-        Route::post("/createadmin",[admin::class,"create"]);
-        Route::post("/updateadmin",[admin::class,"update"]);
+        Route::get("/getalladmin",[admin::class,"getalladmin"])->middleware("can:admin");
+        Route::post("/createadmin",[admin::class,"create"])->middleware("can:admin");
+        Route::post("/updateadmin",[admin::class,"update"])->middleware("can:admin");
         Route::get("/getmyadmininfo",[admin::class,"getmyadmininfo"]);
-        Route::post("/deleteadmin",[admin::class,"delete"]);
-
-        
+        Route::post("/deleteadmin",[admin::class,"delete"])->middleware("can:admin");
 
 
 
 
-        Route::post("/createrole",[role::class,"create"]);
-        Route::post("/updaterole",[role::class,"update"]);
-        Route::get("/getrole",[role::class,"getrole"]);
-        Route::post("/deleterole",[role::class,"delete"]);
-        Route::get("/getallrole",[role::class,"getallrole"]);
+
+
+        Route::post("/createrole",[role::class,"create"])->middleware("can:role");
+        Route::post("/updaterole",[role::class,"update"])->middleware("can:role");
+        Route::get("/getrole",[role::class,"getrole"])->middleware("can:role");
+        Route::post("/deleterole",[role::class,"delete"])->middleware("can:role");
+        Route::get("/getallrole",[role::class,"getallrole"])->middleware("can:role");
 
 
 
-        Route::post("/createtechnical",[technical::class,"create"]);
-        Route::post("/updatetechnical",[technical::class,"update"]);
-        Route::get("/gettechnical",[technical::class,"gettechnical"]);
-        Route::post("/deletetechnical",[technical::class,"delete"]);
-        Route::get("/getalltechnical",[technical::class,"getalltechnical"]);
+        Route::post("/createtechnical",[technical::class,"create"])->middleware("can:technical");
+        Route::post("/updatetechnical",[technical::class,"update"])->middleware("can:technical");
+        Route::get("/gettechnical",[technical::class,"gettechnical"])->middleware("can:technical");
+        Route::post("/deletetechnical",[technical::class,"delete"])->middleware("can:technical");
+        Route::get("/getalltechnical",[technical::class,"getalltechnical"])->middleware("can:technical");
 
 
         Route::post("/uploadimages",[image::class,"upload"]);
@@ -59,43 +56,44 @@ Route::group(["middleware"=>"api_password"],function(){
 
 
 
-        Route::post("/createmember",[member::class,"store"]);
-        Route::post("/updatemember",[member::class,"update"]);
-        Route::get("/getuser",[member::class,"getuser"]);
-        Route::get("getalluser",[member::class,"getalluser"]);
-        Route::post("/deleteuser",[member::class,"delete"]);
+        Route::post("/createmember",[member::class,"store"])->middleware("can:member");
+        Route::post("/updatemember",[member::class,"update"])->middleware("can:member");
+        Route::get("/getuser",[member::class,"getuser"])->middleware("can:member");
+        Route::get("getalluser",[member::class,"getalluser"])->middleware("can:member");
+        Route::post("/deleteuser",[member::class,"delete"])->middleware("can:member");
 
 
 
-        Route::post("/createteam",[team::class,"store"]);
-        Route::post("/updateteam",[team::class,"update"]);
-        Route::get("/getallteam",[team::class,"getallteam"]);
-        Route::get("/getteam",[team::class,"getteam"]);
-        Route::post("/deleteteam",[team::class,"delete"]);
+        Route::post("/createteam",[team::class,"store"])->middleware("can:team");
+        Route::post("/updateteam",[team::class,"update"])->middleware("can:team");
+        Route::get("/getallteam",[team::class,"getallteam"])->middleware("can:team");
+        Route::get("/getteam",[team::class,"getteam"])->middleware("can:team");
+        Route::post("/deleteteam",[team::class,"delete"])->middleware("can:team");
 
 
 
-        Route::post("/createbasefeature",[baseFeature::class,"store"]);
-        Route::post("/updatebasefeature",[baseFeature::class,"update"]);
-        Route::get("/getallbasefeature",[baseFeature::class,"getall"]);
-        Route::get("/getbasefeature",[baseFeature::class,"getOne"]);
-        Route::post("/deletebasefeature",[baseFeature::class,"delete"]);
-
-        
-        Route::post("/createtask",[task::class,"store"]);
-        Route::post("/updatetask",[task::class,"update"]);
-        Route::post("task/updateteam",[task::class,"updateteam"]);
-        Route::post("getalltask",[task::class,"getalltask"]);
-        Route::post("deletetask",[task::class,"delete"]);
-        
+        Route::post("/createbasefeature",[baseFeature::class,"store"])->middleware("can:feature");
+        Route::post("/updatebasefeature",[baseFeature::class,"update"])->middleware("can:feature");
+        Route::get("/getallbasefeature",[baseFeature::class,"getall"])->middleware("can:feature");
+        Route::get("/getbasefeature",[baseFeature::class,"getOne"])->middleware("can:feature");
+        Route::post("/deletebasefeature",[baseFeature::class,"delete"])->middleware("can:feature");
 
 
-        Route::post("/addfeaturetotask",[feature::class,"store"]);
-        Route::post("/updatefeaturetask",[feature::class,"update"]);
-        Route::post("/deletefeaturetask",[feature::class,"delete"]);
+        Route::post("/createtask",[task::class,"store"])->middleware("can:task");
+        Route::post("/updatetask",[task::class,"update"])->middleware("can:task");
+        Route::post("task/updateteam",[task::class,"updateteam"])->middleware("can:task");
+        Route::post("getalltask",[task::class,"getalltask"])->middleware("can:task");
+        Route::post("deletetask",[task::class,"delete"])->middleware("can:task");
 
 
-        Route::post("/sendemail",[admin::class,"sendmail"]);
+
+        Route::post("/addfeaturetotask",[feature::class,"store"])->middleware("can:feature");
+        Route::post("/updatefeaturetask",[feature::class,"update"])->middleware("can:feature");
+        Route::post("/deletefeaturetask",[feature::class,"delete"])->middleware("can:feature");
+
+
+        Route::post("/sendemail",[admin::class,"sendmail"])->middleware("sendmail");
+
 
 
 
@@ -108,6 +106,5 @@ Route::group(["middleware"=>"api_password"],function(){
 
     });
 
-    Route::post("/filtertask",[task::class,"filtertask"])->middleware("checkAllToken");
 
 });

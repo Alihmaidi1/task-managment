@@ -17,7 +17,8 @@ return new class extends Migration
             $table->uuid("id");
             $table->primary("id");
             $table->string("name");
-            $table->enum("status",[0,1]);
+            $table->enum("status",[0,1,2]);
+            $table->enum("activity",[0,1,2,3]);
             $table->enum("critial",[0,1,2,3,4]);
             $table->integer("process")->default(0);
             $table->date("deadline");

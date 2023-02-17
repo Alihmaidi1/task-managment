@@ -1,16 +1,12 @@
-<?php 
+<?php
 return [
-
-
-    "technical",
-    "task",
-    "feature",
     "admin",
     "role",
+    "technical",
+    "member",
+    "task",
+    "feature",
     "team",
-    "member"
+    "sendmail"
 
 ];
-
-
-

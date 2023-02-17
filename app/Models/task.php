@@ -10,7 +10,7 @@ class task extends Model
 {
     use HasFactory,HasUuids;
 
-    public $fillable=["name","status","critial","process","deadline","description","from","team_id"];
+    public $fillable=["name","activity","status","critial","process","deadline","description","from","team_id"];
 
     public $hidden=["pivot","created_at","updated_at","team_id"];
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\feature;
+namespace App\Http\Requests\comment;
 
+use App\Rules\checkFeatureOrTask;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class delete extends FormRequest
+class store extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +27,11 @@ class delete extends FormRequest
     {
         return [
 
-            "id"=>"required|exists:features,id"
+            "content"=>"required",
+            "id"=>"required|exists:tasks,id"
 
         ];
+
     }
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
@@ -42,5 +45,6 @@ class delete extends FormRequest
 
 
     }
+
 
 }

@@ -10,7 +10,8 @@ class feature extends Model
 {
     use HasFactory,HasUuids;
 
-    public $fillable=["status","critial","process","from","task_id","base_feature_id","description","deadline"];
+
+    public $fillable=["status","activity","critial","process","from","task_id","base_feature_id","description","deadline"];
 
 
     public $hidden=["created_at","updated_at","task_id","base_feature_id"];
@@ -102,6 +103,5 @@ class feature extends Model
     {
         return $this->morphMany(Comment::class, 'forable');
     }
-
 
 }
