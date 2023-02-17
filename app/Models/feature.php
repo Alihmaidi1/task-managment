@@ -53,7 +53,7 @@ class feature extends Model
     public function getFromAttribute($value){
 
         return ($value==0)?"Web Application":"Exel OR Word";
-        
+
     }
     public $appends=["images","feature"];
 
@@ -97,4 +97,11 @@ class feature extends Model
         return $this->belongsToMany(User::class,feature_member::class,"feature_id","member_id");
 
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'forable');
+    }
+
+
 }

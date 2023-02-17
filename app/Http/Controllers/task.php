@@ -6,6 +6,7 @@ use App\Http\Requests\task\delete;
 use App\Http\Requests\task\store;
 use App\Http\Requests\task\update;
 use App\Http\Requests\task\updateteam;
+use App\Models\task as ModelsTask;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
@@ -174,6 +175,33 @@ class task extends Controller
 
         }
 
+    }
+
+
+    public function filtertask(Request $request){
+
+        try{
+
+
+            if(auth("api")->check()){
+
+
+
+            }else{
+
+
+
+            }
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+
+        }
 
     }
+
 }

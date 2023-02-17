@@ -108,5 +108,6 @@ Route::group(["middleware"=>"api_password"],function(){
 
     });
 
+    Route::post("/filtertask",[task::class,"filtertask"])->middleware("checkAllToken");
 
 });

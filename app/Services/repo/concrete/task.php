@@ -65,6 +65,12 @@ class task implements taskInterface{
         });
     }
 
+
+    public function filter(){
+
+        // ModelsTask::where
+
+    }
     
 
 

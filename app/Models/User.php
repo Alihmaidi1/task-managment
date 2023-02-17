@@ -24,6 +24,11 @@ class User extends Authenticatable
     protected $hidden = ['password',"created_at","updated_at","pivot"];
 
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'fromable');
+    }
+
     public function getGenderAttribute($value){
 
 

@@ -86,7 +86,7 @@ class task extends Model
     public function getFromAttribute($value){
 
         return ($value==0)?"Web Application":"Exel OR Word";
-        
+
     }
 
 
@@ -96,5 +96,12 @@ class task extends Model
 
 
     }
+
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'forable');
+    }
+
 
 }

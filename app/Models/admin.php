@@ -17,6 +17,11 @@ class admin extends Authenticatable
     public $hidden=["created_at","updated_at","role_id","password"];
 
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'fromable');
+    }
+
 
     public function role(){
 
