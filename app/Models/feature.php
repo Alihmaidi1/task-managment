@@ -16,15 +16,40 @@ class feature extends Model
 
     public $hidden=["created_at","updated_at","task_id","base_feature_id"];
 
+    public function getActivityAttribute($value){
+
+        if($value==0){
+
+            return "Under maintenance";
+
+        }else if($value==1){
+
+            return "Under Testing phase";
+
+        }else if($value==2){
+
+            return "Under production phase";
+        }else if($value==3){
+
+            return "in development mode";
+        }
+
+    }
+
 
     public function getStatusAttribute($value){
 
         if($value==0){
 
-            return "On Hold Task";
+            return "On Hold Feature";
+        }else if($value==1){
+
+        return "in Process Feature";
+
+
         }
 
-        return "in Process Task";
+        return "Stoped feature";
     }
 
     public function getCritialAttribute($value){

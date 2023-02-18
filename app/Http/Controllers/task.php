@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\task\delete;
+use App\Http\Requests\task\import;
 use App\Http\Requests\task\store;
 use App\Http\Requests\task\update;
 use App\Http\Requests\task\updateteam;
-use App\Models\task as ModelsTask;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
@@ -41,7 +41,7 @@ class task extends Controller
             $description=$request->description;
             $technicals=$request->technicals;
             $images=$request->images;
-            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,0);            
+            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,0);
             $task->technicals()->sync($technicals);
             $this->temp->saveImages($images,"task",$task->id);
             $task->technicals;
@@ -75,10 +75,10 @@ class task extends Controller
             $technicals=$request->technicals;
             $this->temp->deleteImage($deleted_image,"task");
             $task=$this->task->update($id,$name,$status,$critial,$deadline,$description);
-            $this->temp->saveImages($images,"task",$id);  
-            $task->technicals()->sync($technicals);           
+            $this->temp->saveImages($images,"task",$id);
+            $task->technicals()->sync($technicals);
             $task->technicals;
-            $task->team;           
+            $task->team;
             return response()->json(["data"=>$task],200);
 
 
@@ -107,14 +107,14 @@ class task extends Controller
             $task->team_id=$team_id;
             $task->save();
             $task->technicals;
-            $task->team;           
-       
+            $task->team;
+
             return response()->json(["data"=>$task]);
-            
 
 
 
-            
+
+
         }catch(\Exception $ex){
 
 
@@ -160,7 +160,7 @@ class task extends Controller
                 File::deleteDirectory(public_path("feature/v3/".$feature->id));
                 $feature->technicals()->delete();
                 $feature->images()->delete();
-                
+
             }
             File::deleteDirectory(public_path("task/v1/".$task->id));
             File::deleteDirectory(public_path("task/v2/".$task->id));
@@ -203,5 +203,23 @@ class task extends Controller
         }
 
     }
+
+
+
+    public function import(import $request){
+        try{
+
+
+
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+        }
+
+    }
+
 
 }

@@ -84,6 +84,7 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("task/updateteam",[task::class,"updateteam"])->middleware("can:task");
         Route::post("getalltask",[task::class,"getalltask"])->middleware("can:task");
         Route::post("deletetask",[task::class,"delete"])->middleware("can:task");
+        Route::post("importtask",[task::class,"import"])->middleware("can:task");
 
 
 

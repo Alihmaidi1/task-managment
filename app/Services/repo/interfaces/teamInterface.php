@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\interfaces;
 
@@ -13,9 +13,10 @@ interface teamInterface{
     public function getAllTeam();
 
 
-    
+
     public function getTeam($id);
 
+    public function findOrcreate($name);
 
     public function delete($id);
 

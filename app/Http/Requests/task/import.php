@@ -5,7 +5,7 @@ namespace App\Http\Requests\task;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class store extends FormRequest
+class import extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,22 +26,12 @@ class store extends FormRequest
     {
         return [
 
-            "name"=>"required",
-            "status"=>"required|in:0,1",
-            "critial"=>"required|in:0,1,2,3,4",
-            "deadline"=>"required|date",
-            "team_id"=>"required|exists:teams,id",
-            "description"=>"required",
-            "technicals"=>"array|required",
-            "technicals.*"=>"required|exists:technicals,id",
-            "images"=>"array|required",
-            "images.*"=>"required|exists:temps,id"
-
-
+            "file"=>"required|mimes:xlsx, xls'"
 
 
         ];
     }
+
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
 
         throw new HttpResponseException(

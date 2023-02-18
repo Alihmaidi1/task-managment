@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\concrete;
 
@@ -21,7 +21,7 @@ class team implements teamInterface{
 
 
         return $team;
-        
+
 
     }
 
@@ -35,7 +35,7 @@ class team implements teamInterface{
         Cache::pull("teams");
         Cache::pull("team:".$team->id);
         return $team;
-        
+
     }
 
 
@@ -66,6 +66,12 @@ class team implements teamInterface{
         ModelsTeam::findOrFail($id)->delete();
         Cache::pull("teams");
         Cache::pull("team:".$id);
+
+    }
+
+    public function findOrcreate($name){
+
+        return ModelsTeam::firstOrCreate(["name"=>$name]);
 
     }
 

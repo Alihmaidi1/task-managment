@@ -16,14 +16,14 @@ class admin implements adminInterface{
 
         return Cache::rememberForever("admin:".$email,function()use($email){
 
-            return ModelsAdmin::where("email",$email)->firstOrFail();
+            return ModelsAdmin::with(["role"])->where("email",$email)->firstOrFail();
         });
     }
 
     public function getAllAdmin(){
 
 
-        return ModelsAdmin::where("id","!=",auth()->user()->id)->get();
+        return ModelsAdmin::with(["role"])->where("id","!=",auth()->user()->id)->get();
     }
     public function store($name,$email,$password,$role_id){
 

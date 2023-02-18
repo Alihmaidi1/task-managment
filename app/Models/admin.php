@@ -29,12 +29,12 @@ class admin extends Authenticatable
         return $this->belongsTo(role::class,"role_id");
     }
 
-    // public $appends=["role"];
+    public $appends=["myrole"];
 
 
-    // public function getRoleAttribute(){
+    public function getMyroleAttribute(){
 
-    //     return $this->role()->get();
-    // }
+        return $this->role()->get();
+    }
 
 }

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('features', function (Blueprint $table) {
             $table->uuid("id");
             $table->primary("id");
-            $table->enum("status",[0,1,2]);
-            $table->enum("critial",[0,1,2,3,4]);
-            $table->enum("activity",[0,1,2,3]);
-            $table->integer("process")->default(0);
+            $table->enum("status",[0,1,2])->index();
+            $table->enum("critial",[0,1,2,3,4])->index();
+            $table->enum("activity",[0,1,2,3])->index();
+            $table->integer("process")->default(0)->index();
             $table->date("deadline");
             $table->text("description");
             $table->boolean("from");
