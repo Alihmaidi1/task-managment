@@ -24,6 +24,7 @@ class memberImport implements ToModel,WithValidation,WithHeadingRow,SkipsOnFailu
 
         try{
 
+
             User::updateOrCreate(["email"=>$row["email"]],
             [
                 "name"=>$row["name"],

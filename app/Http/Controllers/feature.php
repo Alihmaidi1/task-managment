@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\feature\delete;
+use App\Http\Requests\feature\import;
 use App\Http\Requests\feature\store;
 use App\Http\Requests\feature\update;
+use App\Imports\featureImport;
 use App\Services\repo\interfaces\featureInterface;
 use App\Services\repo\interfaces\imageInterface;
-use Illuminate\Http\Request;
 use File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class feature extends Controller
 {
@@ -38,8 +40,10 @@ class feature extends Controller
             $technicals=$request->technicals;
             $members=$request->members;
             $images=$request->images;
+            $activity=$request->activity;
 
-            $feature=$this->feature->store($status,$critial,0,$task_id,$base_feature_id,$description,$deadline);
+
+            $feature=$this->feature->store($status,$critial,0,$task_id,$base_feature_id,$description,$deadline,$activity);
             $feature->technicals()->sync($technicals);
             $feature->members()->sync($members);
             $this->temp->saveImages($images,"feature",$feature->id);
@@ -68,15 +72,17 @@ class feature extends Controller
             $base_feature_id=$request->base_feature_id;
             $description=$request->description;
             $deadline=$request->deadline;
+            $activity=$request->activity;
+
             $members=$request->members;
             $images=$request->images;
             $technicals=$request->technicals;
             $deleted_images=$request->deleted_images;
-            $feature=$this->feature->update($id,$status,$critial,$task_id,$base_feature_id,$description,$deadline);
+            $feature=$this->feature->update($id,$status,$critial,$task_id,$base_feature_id,$description,$deadline,$activity);
             $feature->technicals()->sync($technicals);
             $feature->members()->sync($members);
-            $this->temp->deleteImage($deleted_images,"feature");
-            $this->temp->saveImages($images,"feature",$feature->id);
+            ($deleted_images)?$this->temp->deleteImage($deleted_images,"feature"):null;
+            ($images)?$this->temp->saveImages($images,"feature",$feature->id):null;
             $feature->technicals;
             $feature->members;
             return response()->json(["data"=>$feature],200);
@@ -120,5 +126,32 @@ class feature extends Controller
 
     }
 
+
+
+    public function import(import $request){
+
+
+        try{
+
+            $file=$request->file("file");
+            Excel::queueImport(new featureImport(),$file);
+
+
+
+            return response()->json(["message"=>"the import is start ..."],200);
+
+
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
+
+
+    }
 
 }

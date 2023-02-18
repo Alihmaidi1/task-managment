@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\concrete;
 
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 class feature implements featureInterface{
 
 
-    public function store($status,$critial,$from,$task_id,$base_feature_id,$description,$deadline){
+    public function store($status,$critial,$from,$task_id,$base_feature_id,$description,$deadline,$activity){
 
 
         $feature=ModelsFeature::create([
@@ -20,7 +20,9 @@ class feature implements featureInterface{
             "base_feature_id"=>$base_feature_id,
             "description"=>$description,
             "deadline"=>$deadline,
-            "from"=>$from
+            "from"=>$from,
+            "activity"=>$activity
+
 
         ]);
         Cache::pull("features");
@@ -28,11 +30,12 @@ class feature implements featureInterface{
     }
 
 
-    public function update($id,$status,$critial,$task_id,$base_feature_id,$description,$deadline){
+    public function update($id,$status,$critial,$task_id,$base_feature_id,$description,$deadline,$activity){
 
         $feature=ModelsFeature::findOrFail($id);
         $feature->status=$status;
         $feature->critial=$critial;
+        $feature->activity=$activity;
         $feature->task_id=$task_id;
         $feature->base_feature_id=$base_feature_id;
         $feature->description=$description;

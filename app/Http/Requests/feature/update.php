@@ -40,22 +40,23 @@ class update extends FormRequest
             "images.*"=>"required|exists:temps,id",
             "technicals"=>"required",
             "technicals.*"=>"exists:technicals,id",
-            "deleted_images"=>"exists:images,id"
+            "deleted_images"=>"exists:images,id",
+            "activity"=>"required|in:0,1,2,3"
 
         ];
     }
 
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-            
-                
+
+
+
     }
 
 }

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreign("task_id")->references("id")->on("tasks")->onDelete("cascade")->onUpdate("cascade");
             $table->uuid("base_feature_id");
             $table->foreign("base_feature_id")->references("id")->on("base_features")->onDelete("cascade")->onUpdate("cascade");
+            $table->unique(["base_feature_id","task_id"]);
             $table->timestamps();
         });
     }

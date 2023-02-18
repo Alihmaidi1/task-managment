@@ -26,6 +26,7 @@ class taskImport implements ToModel,WithValidation,WithHeadingRow,SkipsOnFailure
         try{
 
 
+
             $technicals=$row["technicals"];
             $technicals=explode(",",$technicals);
             $arr=[];

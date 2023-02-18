@@ -11,7 +11,6 @@ use App\Imports\multiplesheetImport;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
-use App\Services\repo\interfaces\userInterface;
 use Illuminate\Http\Request;
 use File;
 use Maatwebsite\Excel\Facades\Excel;
@@ -220,9 +219,7 @@ class task extends Controller
 
             $file=$request->file("file");
 
-            // (new multiplesheetImport)->import($file);
             Excel::queueImport(new multiplesheetImport(),$file);
-            // Excel::queueImport(new UsersImport, 'users.xlsx');
 
 
 

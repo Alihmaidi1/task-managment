@@ -91,6 +91,7 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("/addfeaturetotask",[feature::class,"store"])->middleware("can:feature");
         Route::post("/updatefeaturetask",[feature::class,"update"])->middleware("can:feature");
         Route::post("/deletefeaturetask",[feature::class,"delete"])->middleware("can:feature");
+        Route::post("/importfeature",[feature::class,"import"])->middleware("can:feature");
 
 
         Route::post("/sendemail",[admin::class,"sendmail"])->middleware("sendmail");

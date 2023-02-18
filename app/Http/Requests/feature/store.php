@@ -38,7 +38,8 @@ class store extends FormRequest
             "members"=>"array",
             "members.*"=>new checkMemberTask(request()->get("task_id")),
             "technicals"=>"required|array",
-            "technicals.*"=>"exists:technicals,id"
+            "technicals.*"=>"exists:technicals,id",
+            "activity"=>"required|in:0,1,2,3"
 
 
         ];
@@ -46,15 +47,15 @@ class store extends FormRequest
 
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-        
-                        
+
+
+
     }
 
 }

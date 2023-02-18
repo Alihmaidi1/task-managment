@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\task;
+namespace App\Http\Requests\feature;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class import extends FormRequest
 {
@@ -27,21 +26,6 @@ class import extends FormRequest
         return [
 
             "file"=>"required|mimes:xlsx, xls"
-
-
         ];
     }
-
-    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-
-        throw new HttpResponseException(
-
-            response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
-
-        );
-
-
-
-    }
-
 }
