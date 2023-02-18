@@ -26,7 +26,7 @@ class store extends FormRequest
     {
         return [
 
-            "name"=>"required",
+            "name"=>"required|unique:teams,name",
             "members"=>"required|array",
             "members.*"=>"required|exists:users,id"
 
@@ -34,15 +34,15 @@ class store extends FormRequest
     }
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-            
-        
+
+
+
     }
 
 

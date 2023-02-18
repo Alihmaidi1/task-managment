@@ -38,10 +38,12 @@ class member extends Controller
             $gender=$request->gender;
             $image_id=$request->image_id;
             $date_of_birth=$request->date_of_birth;
+            $user_id=$request->user_id;
+
             $image=$this->temp->getTempFile($image_id);
             $this->image->MoveFile($image->getRawOriginal("url"),"temp","member");
             $image=$this->temp->deleteTempFile($image->id);
-            $user=$this->member->store($name,$email,$password,$gender,$image->getRawOriginal("url"),$date_of_birth);
+            $user=$this->member->store($name,$email,$password,$gender,$image->getRawOriginal("url"),$date_of_birth,$user_id);
             return response()->json(["data"=>$user],200);
 
 
@@ -52,7 +54,7 @@ class member extends Controller
 
         }
 
-        
+
     }
 
 
@@ -68,12 +70,14 @@ class member extends Controller
             $date_of_birth=$request->date_of_birth;
             $image_id=$request->image_id;
             $gender=$request->gender;
-            if($image_id!=null){            
+            $user_id=$request->user_id;
+
+            if($image_id!=null){
             $image=$this->temp->getTempFile($image_id);
             $this->image->MoveFile($image->getRawOriginal("url"),"temp","member");
-            $url=$this->temp->deleteTempFile($image->id)->getRawOriginal("url");                                        
+            $url=$this->temp->deleteTempFile($image->id)->getRawOriginal("url");
             }
-            $user=$this->member->update($id,$name,$email,$password,$gender,$url,$date_of_birth);
+            $user=$this->member->update($id,$name,$email,$password,$gender,$url,$date_of_birth,$user_id);
             return response()->json(["data"=>$user],200);
         }catch(\Exception $ex){
 

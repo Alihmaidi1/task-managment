@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Services\repo\concrete;
 
 use App\Models\temp;
@@ -13,7 +13,7 @@ class user implements userInterface{
 
 
 
-    
+
 
     public function getUserByEmail($email){
 
@@ -24,7 +24,7 @@ class user implements userInterface{
         });
     }
 
-    public function store($name,$email,$password,$gender,$url,$date_of_birth){
+    public function store($name,$email,$password,$gender,$url,$date_of_birth,$user_id){
 
         $user=ModelsUser::create([
 
@@ -33,8 +33,9 @@ class user implements userInterface{
             "password"=>Hash::make($password),
             "date_of_birth"=>$date_of_birth,
             "url"=>$url,
-            "gender"=>$gender
-            
+            "gender"=>$gender,
+            "user_id"=>$user_id
+
         ]);
         Cache::pull("users");
         return $user;
@@ -43,7 +44,7 @@ class user implements userInterface{
 
     }
 
-    public function update($id,$name,$email,$password,$gender,$url,$date_of_birth){
+    public function update($id,$name,$email,$password,$gender,$url,$date_of_birth,$user_id){
 
         $user=ModelsUser::findOrFail($id);
         $user->name=$name;
@@ -53,6 +54,7 @@ class user implements userInterface{
         }
         $user->name=$name;
         $user->gender=$gender;
+        $user->user_id=$user_id;
         $user->date_of_birth=$date_of_birth;
         $user->url=($url=="")?$user->getRawOriginal("url"):$url;
         $user->save();
@@ -99,8 +101,8 @@ class user implements userInterface{
         Cache::pull("user:".$id);
         Cache::pull("users");
         return $user1;
-    
+
     }
 
-    
+
 }

@@ -26,20 +26,20 @@ class store extends FormRequest
     {
         return [
 
-            "name"=>"required"
+            "name"=>"required|unique:base_features,name"
 
         ];
     }
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-            
-        
+
+
     }
 
 

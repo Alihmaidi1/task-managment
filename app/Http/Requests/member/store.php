@@ -31,22 +31,23 @@ class store extends FormRequest
             "password"=>"required",
             "gender"=>"required|in:1,0",
             "image_id"=>"required|exists:temps,id",
-            "date_of_birth"=>"required|date"
-    
+            "date_of_birth"=>"required|date",
+            "user_id"=>"required|unique:users,user_id"
+
         ];
     }
 
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-        
-            
+
+
+
     }
 
 

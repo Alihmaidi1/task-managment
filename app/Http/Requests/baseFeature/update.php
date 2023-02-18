@@ -26,22 +26,22 @@ class update extends FormRequest
     {
         return [
 
-            "name"=>"required",
+            "name"=>"required|unique:base_features,name,".request()->get("id"),
             "id"=>"required|exists:base_features,id"
         ];
     }
 
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-        
-        
+
+
+
     }
 
 }

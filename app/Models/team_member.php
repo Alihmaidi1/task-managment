@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class team_member extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory;
 
 
     public $fillable=["member_id","team_id"];
     public $hidden=["created_at","updated_at","member_id","team_id"];
 
-    
+
 }

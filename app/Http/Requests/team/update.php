@@ -27,7 +27,7 @@ class update extends FormRequest
         return [
 
             "id"=>"required|exists:teams,id",
-            "name"=>"required",
+            "name"=>"required|unique:teams,name,".request()->get("id"),
             "members"=>"required|array",
             "members.*"=>"required|exists:users,id"
 
@@ -35,15 +35,15 @@ class update extends FormRequest
         ];
     }
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-                    
-        
+
+
+
     }
 
 }

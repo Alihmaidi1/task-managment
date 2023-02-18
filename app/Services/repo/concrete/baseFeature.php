@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\concrete;
 
@@ -20,6 +20,7 @@ class baseFeature implements baseFeatureInterface{
 
         Cache::pull("base_features");
 
+        return $base_feature;
     }
 
 
@@ -31,7 +32,7 @@ class baseFeature implements baseFeatureInterface{
         Cache::pull("base_feature:".$id);
         Cache::pull("base_features");
         return $feature;
-        
+
     }
 
     public function getAll(){
@@ -52,7 +53,7 @@ class baseFeature implements baseFeatureInterface{
 
     public function delete($id){
 
-        base_feature::FindOrFail($id)->delete(); 
+        base_feature::FindOrFail($id)->delete();
         Cache::pull("base_features");
         Cache::pull("base_feature:".$id);
     }

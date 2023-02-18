@@ -32,22 +32,23 @@ class update extends FormRequest
             "email"=>"required|unique:users,email,".request()->id,
             "gender"=>"required",
             "image_id"=>"exists:temps,id",
-            "date_of_birth"=>"required|date"
+            "date_of_birth"=>"required|date",
+            "user_id"=>"required|unique:users,user_id,".request()->get("id")
 
         ];
     }
 
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-            
-            
+
+
+
     }
 
 
