@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date("date_of_birth");
             $table->string("user_id")->unique()->index();
             $table->boolean("gender");
-            $table->string("url");
+            $table->string("url")->nullable();
             $table->timestamps();
         });
     }

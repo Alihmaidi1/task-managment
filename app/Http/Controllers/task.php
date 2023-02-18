@@ -7,11 +7,14 @@ use App\Http\Requests\task\import;
 use App\Http\Requests\task\store;
 use App\Http\Requests\task\update;
 use App\Http\Requests\task\updateteam;
+use App\Imports\multiplesheetImport;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
+use App\Services\repo\interfaces\userInterface;
 use Illuminate\Http\Request;
 use File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class task extends Controller
 {
@@ -19,6 +22,7 @@ class task extends Controller
     public $task;
     public $temp;
     public $image;
+
     public function __construct(taskInterface $task,imageInterface $temp){
 
         $this->task=$task;
@@ -39,9 +43,11 @@ class task extends Controller
             $deadline=$request->deadline;
             $team_id=$request->team_id;
             $description=$request->description;
+            $activity=$request->activity;
+
             $technicals=$request->technicals;
             $images=$request->images;
-            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,0);
+            $task=$this->task->store($name,$status,$critial,$deadline,$team_id,$description,0,$activity);
             $task->technicals()->sync($technicals);
             $this->temp->saveImages($images,"task",$task->id);
             $task->technicals;
@@ -70,12 +76,14 @@ class task extends Controller
             $critial=$request->critial;
             $deadline=$request->deadline;
             $description=$request->description;
+            $activity=$request->activity;
+
             $deleted_image=$request->deleted_image;
             $images=$request->image;
             $technicals=$request->technicals;
-            $this->temp->deleteImage($deleted_image,"task");
-            $task=$this->task->update($id,$name,$status,$critial,$deadline,$description);
-            $this->temp->saveImages($images,"task",$id);
+            ($deleted_image!=null)?$this->temp->deleteImage($deleted_image,"task"):null;
+            $task=$this->task->update($id,$name,$status,$critial,$deadline,$description,$activity);
+            ($images!=null)?$this->temp->saveImages($images,"task",$id):null;
             $task->technicals()->sync($technicals);
             $task->technicals;
             $task->team;
@@ -207,11 +215,19 @@ class task extends Controller
 
 
     public function import(import $request){
+
         try{
 
+            $file=$request->file("file");
+
+            // (new multiplesheetImport)->import($file);
+            Excel::queueImport(new multiplesheetImport(),$file);
+            // Excel::queueImport(new UsersImport, 'users.xlsx');
 
 
 
+
+            return response()->json(["message"=>"the import is start ..."],200);
 
         }catch(\Exception $ex){
 

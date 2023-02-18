@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 namespace App\Services\repo\concrete;
@@ -21,8 +21,8 @@ class technical implements technicalInterface{
 
         ]);
         Cache::pull("technicals");
+        return $technical;
 
-        
     }
 
 
@@ -35,7 +35,7 @@ class technical implements technicalInterface{
         Cache::pull("technicals");
         Cache::pull("technical:".$id);
         return $technical;
-        
+
     }
     public function getTechnical($id){
 
@@ -65,7 +65,7 @@ class technical implements technicalInterface{
         $technical1=$technical;
         $technical->delete();
         return $technical1;
-        
+
     }
 
 }

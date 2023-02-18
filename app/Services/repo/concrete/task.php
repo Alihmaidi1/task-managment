@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\repo\concrete;
 
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 class task implements taskInterface{
 
 
-    public function store($name,$status,$critial,$deadline,$team_id,$description,$from){
+    public function store($name,$status,$critial,$deadline,$team_id,$description,$from,$activity){
 
 
         $task=ModelsTask::create([
@@ -22,7 +22,9 @@ class task implements taskInterface{
             "deadline"=>$deadline,
             "team_id"=>$team_id,
             "from"=>$from,
-            "description"=>$description
+            "description"=>$description,
+            "activity"=>$activity
+
 
         ]);
 
@@ -31,7 +33,7 @@ class task implements taskInterface{
 
     }
 
-    public function update($id,$name,$status,$critial,$deadline,$description){
+    public function update($id,$name,$status,$critial,$deadline,$description,$activity){
 
         $task=ModelsTask::FindOrFail($id);
         $task->name=$name;
@@ -39,6 +41,7 @@ class task implements taskInterface{
         $task->critial=$critial;
         $task->deadline=$deadline;
         $task->description=$description;
+        $task->activity=$activity;
         $task->save();
         Cache::pull("tasks");
         Cache::pull("task:".$task->id);
@@ -71,7 +74,7 @@ class task implements taskInterface{
         // ModelsTask::where
 
     }
-    
+
 
 
 }

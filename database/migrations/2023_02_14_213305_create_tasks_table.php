@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date("deadline");
             $table->text("description");
             $table->boolean("from");
+            $table->unique(["name","team_id"]);
             $table->uuid("team_id");
             $table->foreign("team_id")->references("id")->on("teams")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();

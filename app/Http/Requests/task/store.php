@@ -35,7 +35,8 @@ class store extends FormRequest
             "technicals"=>"array|required",
             "technicals.*"=>"required|exists:technicals,id",
             "images"=>"array|required",
-            "images.*"=>"required|exists:temps,id"
+            "images.*"=>"required|exists:temps,id",
+            "activity"=>"required|in:0,1,2,3"
 
 
 

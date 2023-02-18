@@ -26,22 +26,22 @@ class create extends FormRequest
     {
         return [
 
-            "name"=>"required"
+            "name"=>"required|unique:technicals,name"
 
         ];
     }
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator){
-        
+
         throw new HttpResponseException(
 
             response()->json(["data"=>[],"message"=>$validator->errors()->first()],401)
 
         );
-        
-        
-        
-        
+
+
+
+
     }
 
 }

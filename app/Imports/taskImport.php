@@ -2,44 +2,68 @@
 
 namespace App\Imports;
 
-use App\Services\repo\interfaces\taskInterface;
-use App\Services\repo\interfaces\teamInterface;
+use App\Models\task;
+use App\Models\team;
+use App\Models\technical;
+use App\Models\technicalable;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Validators\Failure;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class taskImport implements ToCollection,WithValidation,WithHeadingRow
+class taskImport implements ToModel,WithValidation,WithHeadingRow,SkipsOnFailure,SkipsOnError
 {
     /**
     * @param Collection $collection
     */
-
-    public $team;
-    public $task;
-
-
-    public function __construct(teamInterface $team,taskInterface $task){
-
-
-        $this->team=$team;
-        $this->task=$task;
-
-
-    }
-
-    public function collection(Collection $rows)
+    public function model($row)
     {
 
-        foreach($rows as $row){
-
-            $team=$this->team->findOrcreate($row["team_name"]);
-            $task=$this->task->store($row["name"],$row["status"],$row["critial"],$row["deadline"],$team->id,$row["description"],"Excel");
+        try{
 
 
+            $technicals=$row["technicals"];
+            $technicals=explode(",",$technicals);
+            $arr=[];
+            foreach($technicals as $technical){
 
 
+                $arr[]=technical::firstOrCreate(['name'=>$technical])->id;
 
+            }
+
+            $team=team::firstOrCreate(["name"=>$row["name"]]);
+            $task=task::updateOrCreate(["team_id"=>$team->id,"name"=>$row["name"]],
+
+                [
+                    "status"=>$row["status"],
+                    "critial"=>$row["critial"],
+                    "deadline"=>Date::excelToDateTimeObject($row["deadline"]),
+                    "process"=>$row["process"],
+                    "activity"=>$row["activity"],
+                    "description"=>$row["description"],
+                    "from"=>1
+                ]
+
+            );
+
+            foreach($arr as $technical){
+
+
+                $technical1=new technicalable();
+                $technical1->technical_id=$technical;
+                $technical1->technicalable_id=$task->id;
+                $technical1->technicalable_type="App\\Models\\task";
+                $technical1->save();
+
+            }
+
+
+        }catch(\Exception $ex){
 
 
         }
@@ -48,25 +72,29 @@ class taskImport implements ToCollection,WithValidation,WithHeadingRow
 
     }
 
+    public function rules():Array{
 
-    public function rules():Array
-    {
+        return[
 
-        return [
-
-            "name"=>"required",
+            "name"=>"required|string",
             "status"=>"required|in:0,1,2",
             "critial"=>"required|in:0,1,2,3,4",
             "process"=>"required|integer",
-            "deadline"=>"required|date",
+            "deadline"=>"required",
             "description"=>"required",
             "technicals"=>"required",
-            "team_name"=>"required"
-
+            "team_name"=>"required",
+            "activity"=>"required|in:0,1,2,3"
         ];
 
 
     }
 
+    public function onError(\Throwable $e)
+    {
+    }
+    public function onFailure(Failure ...$failures)
+    {
+    }
 
 }
