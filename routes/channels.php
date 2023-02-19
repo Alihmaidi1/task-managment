@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-
-Broadcast::channel('done', function ($user) {
-    return true;
+Broadcast::channel('chatroom', function ($user) {
+    return $user;
 });
+
+// Broadcast::channel('done', function ($user) {
+//     return true;
+// });

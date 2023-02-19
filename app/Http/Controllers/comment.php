@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\messageEvent;
 use App\Http\Requests\comment\admintaskcomment;
 use App\Http\Requests\comment\featureadmincomment;
-use App\Models\comment as ModelsComment;
 use App\Services\repo\interfaces\commentInterface;
-use App\Services\repo\interfaces\taskInterface;
-use Illuminate\Http\Request;
 
 class comment extends Controller
 {
@@ -25,7 +22,7 @@ class comment extends Controller
         try{
 
             $comment=$this->comment->store($request->content,auth("api")->user()->id,"App\\Models\\admin",$request->id,"App\\Models\\task");
-            event(new messageEvent($comment));
+            // event(new messageEvent($comment));
             return response()->json(["data"=>$comment],200);
 
         }catch(\Exception $ex){
@@ -43,7 +40,7 @@ class comment extends Controller
         try{
 
             $comment=$this->comment->store($request->content,auth("api")->user()->id,"App\\Models\\admin",$request->id,"App\\Models\\feature");
-            event(new messageEvent($comment));
+            // event(new messageEvent($comment));
             return response()->json(["data"=>$comment],200);
 
 
@@ -68,7 +65,7 @@ class comment extends Controller
 
 
             $comment=$this->comment->store($request->content,auth("user")->user()->id,"App\\Models\\user",$request->id,"App\\Models\\task");
-            event(new messageEvent($comment));
+            // event(new messageEvent($comment));
             return response()->json(["data"=>$comment],200);
 
 
@@ -94,7 +91,7 @@ class comment extends Controller
         try{
 
             $comment=$this->comment->store($request->content,auth("user")->user()->id,"App\\Models\\user",$request->id,"App\\Models\\feature");
-            event(new messageEvent($comment));
+            // event(new messageEvent($comment));
             return response()->json(["data"=>$comment],200);
 
 
