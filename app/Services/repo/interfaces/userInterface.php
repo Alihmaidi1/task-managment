@@ -10,6 +10,7 @@ interface userInterface{
     public function store($name,$email,$password,$gender,$url,$date_of_birth,$user_id);
     public function update($id,$name,$email,$password,$gender,$url,$date_of_birth,$user_id);
 
+    // public function filter();
     public function getUser($id);
 
 

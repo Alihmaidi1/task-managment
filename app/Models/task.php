@@ -125,5 +125,34 @@ class task extends Model
         return $this->morphMany(Comment::class, 'forable');
     }
 
+    public function scopeFilter($q){
+
+        if(request("status")){
+
+            $q->where("status",request("status"));
+        }
+
+        if(request("activity")){
+
+            $q->where("activity",request("activity"));
+        }
+
+        if(request("critial")){
+
+            $q->where("critial",request("critial"));
+        }
+
+        if(request("process")){
+
+            $q->where("process",request("process"));
+        }
+
+        if(request("deadline")){
+
+            $q->where("deadline",request("deadline"));
+        }
+
+    }
+
 
 }

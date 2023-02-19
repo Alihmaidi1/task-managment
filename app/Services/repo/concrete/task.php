@@ -69,10 +69,9 @@ class task implements taskInterface{
     }
 
 
-    public function filter(){
+    public function getFiltertask(){
 
-        // ModelsTask::where
-
+        return ModelsTask::with(["technicals","team","features"])->filter()->get();
     }
 
 

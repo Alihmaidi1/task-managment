@@ -16,4 +16,6 @@ interface taskInterface{
 
 
     public function getAllTask();
+
+    public function getFiltertask();
 }

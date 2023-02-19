@@ -20,7 +20,7 @@ class user implements userInterface{
 
         return Cache::rememberForever("member:".$email,function()use($email){
 
-            return ModelsUser::where("email",$email)->firstOrFail();
+            return ModelsUser::with(["tasks"])->where("email",$email)->firstOrFail();
         });
     }
 
@@ -74,7 +74,7 @@ class user implements userInterface{
 
         return Cache::rememberForever("user:".$id,function() use ($id){
 
-            return ModelsUser::findOrFail($id);
+            return ModelsUser::with(["tasks"])->where("id",$id)->firstOrFail();
         });
     }
 
@@ -83,7 +83,7 @@ class user implements userInterface{
 
         return Cache::rememberForever("users",function(){
 
-            return ModelsUser::all();
+            return ModelsUser::with(["tasks"])->get();
 
         });
     }

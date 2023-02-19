@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\task\adminfilter;
 use App\Http\Requests\task\delete;
 use App\Http\Requests\task\import;
 use App\Http\Requests\task\store;
 use App\Http\Requests\task\update;
 use App\Http\Requests\task\updateteam;
 use App\Imports\multiplesheetImport;
+use App\Models\User;
 use App\Services\fileOperation\intervenationImage;
 use App\Services\repo\interfaces\imageInterface;
 use App\Services\repo\interfaces\taskInterface;
@@ -231,6 +233,51 @@ class task extends Controller
 
             return response()->json(["message"=>$ex->getMessage()],500);
         }
+
+    }
+
+
+    public function admintaskdilter(adminfilter $request){
+
+        try{
+
+            $deadline=$request->deadline;
+            $status=$request->status;
+            $critial=$request->critial;
+            $process=$request->process;
+            $activity=$request->activity;
+
+            // return ;
+            // return
+            return response()->json(["data"=>$this->task->getFiltertask()]);
+
+
+        }catch(\Exception $ex){
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
+
+
+
+
+    }
+
+
+    public function filtertaskuser(adminfilter $request){
+        try{
+
+            return response()->json(["data"=>User::find(auth()->user()->id)->filtertask()]);
+
+
+        }catch(\Exception $ex){
+
+
+            return response()->json(["message"=>$ex->getMessage()],500);
+
+        }
+
 
     }
 

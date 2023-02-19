@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasUuids;
+    use HasApiTokens, HasFactory, Notifiable,HasUuids,HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +29,7 @@ class User extends Authenticatable
     {
         return $this->morphMany(Comment::class, 'fromable');
     }
+
 
     public function getGenderAttribute($value){
 
@@ -61,5 +63,69 @@ class User extends Authenticatable
 
         return $this->belongsToMany(feature::class,feature_member::class,"member_id","feature_id");
     }
+
+    public function tasks(){
+
+        return $this->hasManyDeep(task::class,[team_member::class,team::class ],
+        [
+
+            "member_id",
+            "id",
+            "team_id"
+
+        ],[
+
+            "id",
+            "team_id",
+            "id"
+
+        ]
+    );
+    }
+
+    public function filtertask(){
+
+        $task=$this->hasManyDeep(task::class,[team_member::class,team::class ],
+        [
+
+            "member_id",
+            "id",
+            "team_id"
+
+        ],[
+
+            "id",
+            "team_id",
+            "id"
+
+        ]
+    );
+    if(request("status")){
+
+        $task->where("status",request("status"));
+
+    }
+
+    if(request("activity")){
+
+        $task->where("activity",request("activity"));
+
+    }
+
+    if(request("critial")){
+
+        $task->where("critial",request("critial"));
+
+    }
+
+    if(request("process")){
+
+        $task->where("process",request("process"));
+
+    }
+
+    return $task->get();
+    }
+
 
 }

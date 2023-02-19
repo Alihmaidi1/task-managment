@@ -85,6 +85,7 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("getalltask",[task::class,"getalltask"])->middleware("can:task");
         Route::post("deletetask",[task::class,"delete"])->middleware("can:task");
         Route::post("importtask",[task::class,"import"])->middleware("can:task");
+        Route::post("admintaskdilter",[task::class,"admintaskdilter"])->middleware("can:task");
 
 
 
@@ -104,6 +105,7 @@ Route::group(["middleware"=>"api_password"],function(){
 
     Route::group(["middleware"=>"auth:user"],function(){
 
+        Route::post("filtertaskuser",[task::class,"filtertaskuser"]);
         Route::post("/logout",[authentication::class,"logout"]);
 
     });
