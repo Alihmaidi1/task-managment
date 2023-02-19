@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin;
 use App\Http\Controllers\authentication;
 use App\Http\Controllers\baseFeature;
+use App\Http\Controllers\comment;
 // use App\Http\Controllers\comment;
 use App\Http\Controllers\feature;
 use App\Http\Controllers\image;
@@ -86,7 +87,8 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("deletetask",[task::class,"delete"])->middleware("can:task");
         Route::post("importtask",[task::class,"import"])->middleware("can:task");
         Route::post("admintaskfilter",[task::class,"admintaskdilter"])->middleware("can:task");
-        Route::post("adminfeaturefilter",[feature::class,"adminfeaturefilter"])->middleware("can:feature");
+        Route::post("adminaddcommenttask",[comment::class,"adminaddcommenttask"])->middleware("can:task");
+
 
 
 
@@ -94,6 +96,9 @@ Route::group(["middleware"=>"api_password"],function(){
         Route::post("/updatefeaturetask",[feature::class,"update"])->middleware("can:feature");
         Route::post("/deletefeaturetask",[feature::class,"delete"])->middleware("can:feature");
         Route::post("/importfeature",[feature::class,"import"])->middleware("can:feature");
+        Route::post("adminfeaturefilter",[feature::class,"adminfeaturefilter"])->middleware("can:feature");
+        Route::post("admincommenttofeature",[comment::class,"admincommenttofeature"])->middleware("can:feature");
+
 
 
         Route::post("/sendemail",[admin::class,"sendmail"])->middleware("sendmail");
@@ -108,6 +113,10 @@ Route::group(["middleware"=>"api_password"],function(){
 
         Route::post("filtertaskuser",[task::class,"filtertaskuser"]);
         Route::post("userfeaturefilter",[feature::class,"userfeaturefilter"]);
+        Route::post("usercommenttotask",[comment::class,"usercommenttotask"]);
+
+        Route::post("usercommenttofeature",[comment::class,"usercommenttofeature"]);
+
 
         Route::post("/logout",[authentication::class,"logout"]);
 

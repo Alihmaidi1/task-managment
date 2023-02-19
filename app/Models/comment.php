@@ -12,7 +12,21 @@ class comment extends Model
     public $fillable=["content","forable_id","forable_type","fromable_id","fromable_type"];
 
 
-    public $hiiden=["updated_at","forable_id","forable_type","fromable_id","fromable_type"];
+    public $hidden=["id","updated_at","forable_id","forable_type","fromable_id","fromable_type"];
+
+    public $appends=["user","type"];
+
+    public function getUserAttribute(){
+
+
+        return $this->fromable()->get();
+
+    }
+
+    public function getTypeAttribute(){
+
+        return $this->forable()->get();
+    }
 
 
     public function forable()

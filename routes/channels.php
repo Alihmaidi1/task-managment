@@ -16,5 +16,3 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('done', function ($user) {
     return true;
 });
-
-Broadcast::channel("d");
