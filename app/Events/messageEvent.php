@@ -4,13 +4,11 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class messageEvent implements ShouldBroadcast
+class messageEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,11 +19,19 @@ class messageEvent implements ShouldBroadcast
      */
 
      public $data;
-    public function __construct($data)
+     public $id;
+
+
+     public $type;
+
+     public function __construct($data,$type,$id)
     {
 
 
         $this->data=$data;
+        $this->type=$type;
+        $this->id=$id;
+
 
 
     }
@@ -37,13 +43,13 @@ class messageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('public');
+        return new Channel('public.'.$this->type.".".$this->id);
     }
 
 
     public function broadcastAs()
     {
-        return "process";
+        return "newmessage";
     }
 
 

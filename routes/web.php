@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    event(new messageEvent("sds"));
+    event(new messageEvent("sds","task","sdads"));
     return view('welcome');
 });
