@@ -105,4 +105,43 @@ class user implements userInterface{
     }
 
 
+    public function getfilteredfeature(){
+
+        $user=ModelsUser::with(["features"=>function($q){
+
+            if(request("status")){
+
+                $q->where("status",request("status"));
+            }
+
+
+            if(request("critial")){
+
+                $q->where("critial",request("critial"));
+            }
+
+            if(request("deadline")){
+
+                $q->where("deadline",request("deadline"));
+            }
+
+
+            if(request("activity")){
+
+                $q->where("activity",request("activity"));
+            }
+
+            if(request("process")){
+
+                $q->where("process",request("process"));
+            }
+
+
+
+        }])->where("id",auth()->user()->id)->first();
+
+        return ($user==!null)?$user->features:null;
+    }
+
+
 }

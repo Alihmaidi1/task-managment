@@ -27,7 +27,7 @@ class update extends FormRequest
     {
         return [
             "id"=>"required|exists:tasks,id",
-            "name"=>"required",
+            "name"=>"required|unique:tasks,name,".request("id"),
             "status"=>"required|in:0,1",
             "critial"=>"required|in:0,1,2,3,4",
             "deadline"=>"required",

@@ -12,5 +12,7 @@ interface featureInterface{
 
     public function getFeature($id);
 
+    public function getfilter();
+
 
 }

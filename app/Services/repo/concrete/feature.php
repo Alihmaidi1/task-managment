@@ -3,6 +3,7 @@
 namespace App\Services\repo\concrete;
 
 use App\Models\feature as ModelsFeature;
+use App\Models\User;
 use App\Services\repo\interfaces\featureInterface;
 use Illuminate\Support\Facades\Cache;
 
@@ -56,5 +57,14 @@ class feature implements featureInterface{
             return ModelsFeature::findOrFail($id);
         });
     }
+
+    public function getfilter(){
+
+         return ModelsFeature::filter()->get();
+
+
+    }
+
+
 
 }

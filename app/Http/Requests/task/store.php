@@ -26,7 +26,7 @@ class store extends FormRequest
     {
         return [
 
-            "name"=>"required",
+            "name"=>"required|unique:tasks,name",
             "status"=>"required|in:0,1",
             "critial"=>"required|in:0,1,2,3,4",
             "deadline"=>"required|date",

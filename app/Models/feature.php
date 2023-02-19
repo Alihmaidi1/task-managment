@@ -14,7 +14,7 @@ class feature extends Model
     public $fillable=["status","activity","critial","process","from","task_id","base_feature_id","description","deadline"];
 
 
-    public $hidden=["created_at","updated_at","task_id","base_feature_id"];
+    public $hidden=["pivot","created_at","updated_at","task_id","base_feature_id"];
 
     public function getActivityAttribute($value){
 
@@ -127,6 +127,45 @@ class feature extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'forable');
+    }
+
+    public function scopeFilter($q){
+
+        if(request("status")){
+
+            $q->where("status",request("status"));
+
+        }
+
+        if(request("critial")){
+
+            $q->where("critial",request("critial"));
+
+        }
+
+
+        if(request("deadline")){
+
+            $q->where("deadline",request("deadline"));
+
+        }
+
+        if(request("activity")){
+
+            $q->where("activity",request("activity"));
+
+        }
+
+
+        if(request("process")){
+
+            $q->where("process",request("process"));
+
+        }
+
+
+
+
     }
 
 }

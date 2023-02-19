@@ -18,4 +18,7 @@ interface userInterface{
 
     public function delete($id);
 
+    public function getfilteredfeature();
+    // public function get
+
 }
